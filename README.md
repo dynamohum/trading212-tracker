@@ -1,8 +1,7 @@
 # Trading212 Portfolio Tracker
 
-A robust, self-hosted dashboard for tracking your Trading212 portfolio performance, visualizing holdings, and monitoring historical returns.
+A dashboard for tracking Trading212 portfolio performance, visualizing holdings, and monitoring historical returns.
 
-![Build Status](https://circleci.com/gh/dynamohum/trading212-tracker.svg?style=shield)
 
 ## Features
 
@@ -101,4 +100,4 @@ This project uses **RSpec** for black-box integration testing against the runnin
 
 ## License
 
-Private / Proprietary.
+MIT
