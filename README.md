@@ -43,6 +43,7 @@ A dashboard for tracking Trading212 portfolio performance, visualizing holdings,
     *   Add your credentials in the following format:
         ```text
         TRADING212_API_KEY=your_api_key_here
+        TRADING212_API_SECRET=your_api_secret here
         TRADING212_MODE=demo  # or 'live'
         ```
     *   *Alternatively, set these as environment variables.*
