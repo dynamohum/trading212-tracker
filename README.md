@@ -1,4 +1,5 @@
 # Trading212 Portfolio Tracker
+# hello world
 
 A dashboard for tracking Trading212 portfolio performance, visualizing holdings, and monitoring historical returns.
 
