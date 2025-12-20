@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/paul/trading212_tracker/run.py", line 1, in <module>
+    from app import create_app
+  File "/home/paul/trading212_tracker/app/__init__.py", line 1, in <module>
+    from flask import Flask
+ModuleNotFoundError: No module named 'flask'
