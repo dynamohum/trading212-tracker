@@ -17,16 +17,18 @@ jobs:
              pip install -r requirements.txt
       
       # Run Server in Background
+      # Run Server in Background
       - run:
           name: Start Flask Server
+          background: true
           environment:
             APP_URL: http://localhost:5000
           command: |
-            python run.py > server.log 2>&1 &
-            echo $! > server.pid
-            echo $! > server.pid
-            
-            # Wait for server using Python (reliable)
+             python run.py > server.log 2>&1
+
+      - run:
+          name: Wait for Flask Server
+          command: |
             echo "Waiting for Flask server..."
             for i in $(seq 1 30); do
               if python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000')" 2>/dev/null; then
@@ -43,7 +45,7 @@ jobs:
               exit 1
             fi
 
-            # Double check API endpoint specifically to ensuring app is fully loaded
+            # Double check API endpoint
             echo "Checking /api/positions..."
             if ! python -c "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/api/positions').getcode())" 2>/dev/null; then
                echo "API endpoint failed effectively. Printing logs:"
