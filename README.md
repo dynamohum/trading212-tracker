@@ -47,6 +47,8 @@ A dashboard for tracking Trading212 portfolio performance, visualizing holdings,
         ```
     *   *Alternatively, set these as environment variables.*
 
+    *   See https://docs.trading212.com/api/ for more details
+
 ## Running the Application
 
 Start the Flask application:
