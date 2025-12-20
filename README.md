@@ -5,6 +5,9 @@ A dashboard for tracking Trading212 portfolio performance, visualizing holdings,
 
 ## Features
 
+![Trading212 Portfolio Tracker Dashboard](static/img/portfolio.png)
+
+
 *   **Real-time Dashboard**: View current positions, quantities, and profit/loss in real-time.
 *   **Historical Tracking**: Background service automatically records portfolio value over time to `portfolio_history.db`.
 *   **Performance Metrics**: Calculate TWR (Time-Weighted Returns) and other performance statistics.
