@@ -24,19 +24,19 @@ jobs:
             echo $! > server.pid
             echo $! > server.pid
             
-            # Wait for server up to 30 seconds
+            # Wait for server using Python (reliable)
             echo "Waiting for Flask server..."
             for i in $(seq 1 30); do
-              if curl -s http://localhost:5000 > /dev/null; then
+              if python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000')" 2>/dev/null; then
                 echo "Server is up!"
                 break
               fi
               sleep 1
             done
             
-            # Verify server is still running
-            if ! kill -0 $(cat server.pid) 2>/dev/null; then
-              echo "Server failed to start. Logs:"
+            # Check if server is running and reachable
+            if ! python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000')" 2>/dev/null; then
+              echo "Server failed to respond. Logs:"
               cat server.log
               exit 1
             fi
