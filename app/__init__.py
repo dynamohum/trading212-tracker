@@ -4,7 +4,8 @@ from app.database.db_manager import DatabaseManager
 from app.services.tracker_service import TrackerService
 
 def create_app(config_class=Config):
-    app = Flask(__name__)
+    # Explicitly set template and static folders to root directory
+    app = Flask(__name__, template_folder='../templates', static_folder='../static')
     app.config.from_object(config_class)
 
     # Initialize Database Manager
