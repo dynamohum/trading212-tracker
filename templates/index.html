@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Trading212 Portfolio</h1>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h1 style="margin: 0; font-size: 1.5rem;">Portfolio Tracker</h1>
+            <div style="color: #94a3b8; font-size: 0.9em;">Real-time Trading212 Dashboard</div>
+        </div>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <!-- Account Switcher -->
+            <div id="accountSwitcher" style="display: none;">
+                <select id="accountSelect"
+                    style="background: var(--card-bg); color: var(--text-primary); border: 1px solid #334155; padding: 5px 10px; border-radius: 6px;">
+                    <!-- Options populated by JS -->
+                </select>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Total Value</div>
+                <div class="stat-value" id="totalValue">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Return</div>
+                <div class="stat-value" id="totalReturn">--</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <label class="switch">
+                <input type="checkbox" id="trackingToggle">
+                <span class="slider"></span>
+            </label>
+            <span style="font-size: 0.9em; color: var(--text-secondary);">History Tracking</span>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <!-- Visibility Button -->
+            <button onclick="openVisibilityModal()" class="refresh-btn"
+                style="color: var(--text-secondary); border-color: #334155; display: flex; align-items: center; gap: 6px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Visibility
+            </button>
+
+            <div style="display: flex; align-items: center; gap: 10px; margin-left: 10px;">
+                <label for="refreshRate" style="color: var(--text-secondary); font-size: 0.85rem;">Refresh (s):</label>
+                <input type="number" id="refreshRate" min="5" max="300" value="5"
+                    style="background: transparent; border: 1px solid var(--text-secondary); color: var(--text-primary); padding: 5px; border-radius: 4px; width: 60px;">
+                <button class="refresh-btn" onclick="fetchPositions()">Refresh</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Returns Bar -->
+    <div id="returnsBar"
+        style="display: none; gap: 20px; padding: 10px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2); font-size: 0.85rem; align-items: center;">
+        <!-- Injected via JS -->
+    </div>
+
+    <div id="content">
+        <div class="loading">Loading positions...</div>
+    </div>
+</div>
+
+<!-- Visibility Modal -->
+<div id="visibilityModal" class="modal-overlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 style="margin:0; font-size:1.1rem;">Filter Stocks</h3>
+            <button onclick="closeVisibilityModal()"
+                style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:1.5rem;">&times;</button>
+        </div>
+        <div class="modal-content" id="visibilityList">
+            <!-- Checkboxes injected here -->
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn secondary" onclick="closeVisibilityModal()">Cancel</button>
+            <button class="modal-btn primary" onclick="saveVisibility()">Save Changes</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/portfolio.js') }}"></script>
+{% endblock %}

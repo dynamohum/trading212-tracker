@@ -1,0 +1,55 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      # efficient image with both python and ruby? 
+      # Usually better to pick one primary and install other, or use cimg
+      - image: cimg/python:3.11
+    
+    steps:
+      - checkout
+
+      # Python Setup
+      - run:
+          name: Install Python Dependencies
+          command: |
+             pip install -r requirements.txt
+      
+      # Run Server in Background
+      - run:
+          name: Start Flask Server
+          command: |
+            python run.py > server.log 2>&1 &
+            echo $! > server.pid
+            sleep 5 # Wait for server to start
+
+      # Ruby Setup (Install RVM or use system ruby if available, cimg/python might not have ruby)
+      # Alternative: Use machine executor or standard image. 
+      # Let's try installing ruby or using a specialized image.
+      # Easiest for this multi-language test is to install ruby on python image.
+      - run:
+          name: Install Ruby and Bundler
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y ruby-full
+            sudo gem install bundler
+
+      - run:
+          name: Install Test Dependencies
+          command: |
+            bundle install
+
+      - run:
+          name: Run RSpec Tests
+          command: |
+            bundle exec rspec
+
+      - store_artifacts:
+          path: server.log
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build-and-test

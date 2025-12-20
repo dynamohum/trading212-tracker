@@ -1,0 +1,30 @@
+# Secrets
+api
+.env
+
+# Database
+portfolio_history.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Flask
+instance/
+.webassets-cache
+
+# Ruby/Bundler
+.bundle/
+vendor/
+installs/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store

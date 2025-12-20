@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}{{ ticker }} - Details{% endblock %}
+
+{% block extra_css %}
+<style>
+    .period-btn {
+        background: transparent;
+        border: 1px solid var(--text-secondary);
+        color: var(--text-secondary);
+        padding: 4px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.8rem;
+    }
+
+    .period-btn:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="width: 100%; max-width: 1200px;">
+    <a href="/" class="back-link">← Back to Portfolio</a>
+</div>
+
+<div class="container"
+    style="max-width: 1200px; background: transparent; box-shadow: none; border: none; display: grid; gap: 20px;">
+    <!-- Header -->
+    <div class="header-card">
+        <div>
+            <h1 id="itemName" style="font-size: 1.8rem;">Loading... <span class="ticker-badge">{{ ticker }}</span></h1>
+            <div id="itemDesc" style="color: var(--text-secondary); margin-top: 5px;"></div>
+        </div>
+        <div style="text-align: right;">
+            <div id="currentPrice" style="font-size: 1.5rem; font-weight: 600;">--</div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Current Price</div>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="container" style="padding: 20px; min-height: 400px; display: block;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div style="font-size: 1.2rem; color: var(--text-secondary);">Price History</div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="loadHistory('{{ ticker }}', '1mo')" class="period-btn">1M</button>
+                <button onclick="loadHistory('{{ ticker }}', '6mo')" class="period-btn">6M</button>
+                <button onclick="loadHistory('{{ ticker }}', '1y')" class="period-btn">1Y</button>
+                <button onclick="loadHistory('{{ ticker }}', 'max')" class="period-btn">Max</button>
+            </div>
+        </div>
+        <div id="chart"></div>
+    </div>
+
+    <!-- Dividends -->
+    <div class="container" style="padding: 30px; display: block;">
+        <div style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 15px;">Dividends</div>
+        <div id="dividendsContent">
+            <div class="loading">Loading dividends...</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{{ url_for('static', filename='js/ticker-details.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        initDetails('{{ ticker }}');
+    });
+</script>
+{% endblock %}
