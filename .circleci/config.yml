@@ -19,6 +19,8 @@ jobs:
       # Run Server in Background
       - run:
           name: Start Flask Server
+          environment:
+            APP_URL: http://localhost:5000
           command: |
             python run.py > server.log 2>&1 &
             echo $! > server.pid
@@ -39,6 +41,13 @@ jobs:
               echo "Server failed to respond. Logs:"
               cat server.log
               exit 1
+            fi
+
+            # Double check API endpoint specifically to ensuring app is fully loaded
+            echo "Checking /api/positions..."
+            if ! python -c "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/api/positions').getcode())" 2>/dev/null; then
+               echo "API endpoint failed effectively. Printing logs:"
+               cat server.log
             fi
 
       # Ruby Setup (Install RVM or use system ruby if available, cimg/python might not have ruby)
@@ -62,6 +71,11 @@ jobs:
           name: Run RSpec Tests
           command: |
             bundle exec rspec
+
+      - run:
+          name: Print Server Log on Failure
+          when: always
+          command: cat server.log
 
       - store_artifacts:
           path: server.log
