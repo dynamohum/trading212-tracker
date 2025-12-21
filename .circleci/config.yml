@@ -3,85 +3,21 @@ version: 2.1
 jobs:
   build-and-test:
     docker:
-      # efficient image with both python and ruby? 
-      # Usually better to pick one primary and install other, or use cimg
       - image: cimg/python:3.11
     
     steps:
       - checkout
 
-      # Python Setup
       - run:
           name: Install Python Dependencies
           command: |
              pip install -r requirements.txt
       
-      # Run Server in Background
-      # Run Server in Background
       - run:
-          name: Start Flask Server
-          background: true
-          environment:
-            APP_URL: http://localhost:5000
+          name: Run Pytest
           command: |
-             python run.py > server.log 2>&1
-
-      - run:
-          name: Wait for Flask Server
-          command: |
-            echo "Waiting for Flask server..."
-            for i in $(seq 1 30); do
-              if python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000')" 2>/dev/null; then
-                echo "Server is up!"
-                break
-              fi
-              sleep 1
-            done
+            pytest -v tests/
             
-            # Check if server is running and reachable
-            if ! python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000')" 2>/dev/null; then
-              echo "Server failed to respond. Logs:"
-              cat server.log
-              exit 1
-            fi
-
-            # Double check API endpoint
-            echo "Checking /api/positions..."
-            if ! python -c "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/api/positions').getcode())" 2>/dev/null; then
-               echo "API endpoint failed effectively. Printing logs:"
-               cat server.log
-            fi
-
-      # Ruby Setup (Install RVM or use system ruby if available, cimg/python might not have ruby)
-      # Alternative: Use machine executor or standard image. 
-      # Let's try installing ruby or using a specialized image.
-      # Easiest for this multi-language test is to install ruby on python image.
-      - run:
-          name: Install Ruby and Bundler
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y ruby-full
-            sudo gem install bundler
-
-      - run:
-          name: Install Test Dependencies
-          command: |
-            bundle config set --local path 'vendor/bundle'
-            bundle install
-
-      - run:
-          name: Run RSpec Tests
-          command: |
-            bundle exec rspec
-
-      - run:
-          name: Print Server Log on Failure
-          when: always
-          command: cat server.log
-
-      - store_artifacts:
-          path: server.log
-
 workflows:
   version: 2
   main:
