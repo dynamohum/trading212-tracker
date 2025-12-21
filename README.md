@@ -15,20 +15,20 @@ A dashboard for tracking Trading212 portfolio performance, visualizing holdings,
 *   **Historical Tracking**: Background service automatically records portfolio value over time to `portfolio_history.db`.
 *   **Performance Metrics**: Calculate TWR (Time-Weighted Returns) and other performance statistics.
 *   **Modular Architecture**: Built with Flask Blueprints for scalability and maintenance.
-*   **Integration Testing**: Comprehensive API testing using Ruby RSpec.
+*   **Integration Testing**: Comprehensive API testing using Pytest.
 *   **CI/CD**: Automated testing pipeline configured with CircleCI.
 
 ## Tech Stack
 
 *   **Backend**: Python 3.11+, Flask, SQLite
 *   **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6+)
-*   **Testing**: Ruby RSpec, HTTParty
+*   **Testing**: Pytest
 *   **DevOps**: CircleCI, GitHub Actions compatible
 
 ## Prerequisites
 
 *   Python 3.11 or higher
-*   Ruby 3.0+ (for running tests locally)
+
 *   A Trading212 API Key (Demo or Live)
 
 ## Installation
@@ -69,24 +69,11 @@ The application will start at `http://localhost:5000`.
 *   **Dashboard**: `http://localhost:5000/`
 *   **API Docs**: `http://localhost:5000/api/positions` (etc.)
 
-## Running Tests
+This project uses **Pytest** for black-box integration and white-box unit testing.
 
-This project uses **RSpec** for black-box integration testing against the running API.
-
-1.  **Install Ruby dependencies**:
+1.  **Run the tests**:
     ```bash
-    gem install bundler
-    bundle install
-    ```
-
-2.  **Start the app** (in a separate terminal):
-    ```bash
-    python run.py
-    ```
-
-3.  **Run the tests**:
-    ```bash
-    bundle exec rspec
+    pytest
     ```
 
 ## Project Structure
@@ -100,7 +87,7 @@ This project uses **RSpec** for black-box integration testing against the runnin
 │   └── __init__.py     # App factory
 ├── static/             # CSS and JavaScript assets
 ├── templates/          # HTML templates (Jinja2)
-├── spec/               # RSpec integration tests
+├── tests/              # Pytest integration tests
 ├── .circleci/          # CI/CD configuration
 ├── client.py           # Raw API Client class
 ├── run.py              # Application entry point
