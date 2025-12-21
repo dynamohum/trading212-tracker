@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Run Pytest
           command: |
-            pytest -v tests/
+            PYTHONPATH=. pytest -v tests/
             
 workflows:
   version: 2
