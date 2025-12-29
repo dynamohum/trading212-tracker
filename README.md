@@ -23,7 +23,7 @@ A dashboard for tracking Trading212 portfolio performance, visualizing holdings,
 *   **Backend**: Python 3.11+, Flask, SQLite
 *   **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6+)
 *   **Testing**: Pytest
-*   **DevOps**: CircleCI, GitHub Actions compatible
+*   **DevOps**: CircleCI, GitHub Actions compatible (Keys not required for CI due to mocks)
 
 ## Prerequisites
 
