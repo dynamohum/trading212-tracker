@@ -25,8 +25,8 @@ async function initPortfolio() {
     await loadSettings();
     await fetchPositions();
 
-    // Auto Refresh default 5s (managed by input)
-    setupRefresh(5);
+    // Auto Refresh default 10s (managed by input)
+    setupRefresh(10);
 }
 
 function initEventListeners() {
