@@ -39,12 +39,19 @@ A dashboard for tracking Trading212 portfolio performance, visualizing holdings,
     cd trading212-tracker
     ```
 
-2.  **Install Python dependencies**:
+2.  **Set up Virtual Environment**:
+    It is recommended to use a virtual environment to manage dependencies.
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    ```
+
+3.  **Install Python dependencies**:
     ```bash
     pip install -r requirements.txt
     ```
 
-3.  **Configure Credentials**:
+4.  **Configure Credentials**:
     *   Create a file named `api` in the root directory (this file is git-ignored).
     *   Add your credentials in the following format:
         ```text
@@ -58,10 +65,10 @@ A dashboard for tracking Trading212 portfolio performance, visualizing holdings,
 
 ## Running the Application
 
-Start the Flask application:
+Ensure your virtual environment is active, then start the Flask application:
 
 ```bash
-python run.py
+python3 run.py
 ```
 
 The application will start at `http://localhost:5000`.
